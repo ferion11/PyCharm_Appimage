@@ -1,4 +1,8 @@
 #!/bin/bash
+P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2019.3.3.tar.gz"
+P_NAME=$(echo "PyCharm")
+P_FILENAME=$(echo $P_URL | cut -d/ -f5)
+P_VERSION=$(echo $P_FILENAME | cut -d- -f3 | sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')
 WORKDIR="workdir"
 
 #=========================
@@ -17,8 +21,8 @@ apt install -y aptitude wget file bzip2
 # using the package
 mkdir "$WORKDIR"
 
-wget -nv https://download-cf.jetbrains.com/python/pycharm-community-2019.3.3.tar.gz
-tar xf pycharm*.tar.gz -C "$WORKDIR/"
+wget -nv $P_URL
+tar xf $P_FILENAME -C "$WORKDIR/"
 
 cd "$WORKDIR" || die "ERROR: Directory don't exist: $WORKDIR"
 
@@ -56,6 +60,6 @@ cp resource/* $WORKDIR
 
 ./appimagetool.AppImage --appimage-extract
 
-export ARCH=x86_64; squashfs-root/AppRun -v $WORKDIR -u 'gh-releases-zsync|ferion11|PyCharm_Appimage|continuous|PyCharm-*arch*.AppImage.zsync' PyCharm-${ARCH}.AppImage
+export ARCH=x86_64; squashfs-root/AppRun -v $WORKDIR -u 'gh-releases-zsync|ferion11|$P_NAME_Appimage|continuous|$P_NAME-$P_VERSION-*arch*.AppImage.zsync' $P_NAME-$P_VERSION-${ARCH}.AppImage
 
 echo "All files at the end of script: $(ls)"
