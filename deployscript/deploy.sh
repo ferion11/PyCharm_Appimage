@@ -1,5 +1,5 @@
 #!/bin/bash
-P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2019.3.3.tar.gz"
+P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2019.3.4.tar.gz"
 P_NAME=$(echo "PyCharm")
 P_FILENAME=$(echo $P_URL | cut -d/ -f5)
 P_VERSION=$(echo $P_FILENAME | cut -d- -f3 | sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')
@@ -53,6 +53,17 @@ cd ..
 #wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
 chmod +x appimagetool.AppImage
 
+cat > "AppRun" << EOF
+#!/bin/bash
+HERE="\$(dirname "\$(readlink -f "\${0}")")"
+#------------------------------
+
+MAIN="\$HERE/pycharm-community-${P_VERSION}/bin/pycharm.sh"
+
+export PATH="\$HERE/pycharm-community-${P_VERSION}/bin":\$PATH
+"\$MAIN" "\$@" | cat
+
+EOF
 chmod +x AppRun
 
 cp AppRun $WORKDIR

@@ -1,8 +1,0 @@
-#!/bin/bash
-HERE="$(dirname "$(readlink -f "${0}")")"
-#------------------------------
-#------------------------------
-MAIN="$HERE/pycharm-community-2019.3.3/bin/pycharm.sh"
-
-export PATH="$HERE/pycharm-community-2019.3.3/bin":$PATH
-"$MAIN" "$@" | cat
