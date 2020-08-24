@@ -1,8 +1,8 @@
 #!/bin/bash
-P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2019.3.4.tar.gz"
-P_NAME=$(echo "PyCharm")
-P_FILENAME=$(echo $P_URL | cut -d/ -f5)
-P_VERSION=$(echo $P_FILENAME | cut -d- -f3 | sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')
+P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2020.2.tar.gz"
+P_NAME="$(echo "PyCharm")"
+P_FILENAME="$(echo $P_URL | cut -d/ -f5)"
+P_VERSION="$(echo $P_FILENAME | cut -d- -f3 | sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')"
 WORKDIR="workdir"
 
 #=========================
