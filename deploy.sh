@@ -1,5 +1,6 @@
 #!/bin/bash
-P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2020.2.tar.gz"
+P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2020.3.5.tar.gz"
+
 P_NAME="$(echo "PyCharm")"
 P_FILENAME="$(echo $P_URL | cut -d/ -f5)"
 P_VERSION="$(echo $P_FILENAME | cut -d- -f3 | sed 's/\.[^.]*$//' | sed 's/\.[^.]*$//')"
@@ -13,9 +14,9 @@ die() { echo >&2 "$*"; exit 1; };
 
 #-----------------------------
 #dpkg --add-architecture i386
-apt update
+sudo apt update
 #apt install -y aptitude wget file bzip2 gcc-multilib
-apt install -y aptitude wget file bzip2
+sudo apt install -y aptitude wget file bzip2
 #===========================================================================================
 # Get inex
 # using the package
@@ -29,7 +30,8 @@ cd "$WORKDIR" || die "ERROR: Directory don't exist: $WORKDIR"
 pkgcachedir='/tmp/.pkgdeploycache'
 mkdir -p $pkgcachedir
 
-#aptitude -y -d -o dir::cache::archives="$pkgcachedir" install pycharm-community
+#sudo aptitude -y -d -o dir::cache::archives="$pkgcachedir" install pycharm-community
+# sudo chmod 777 $pkgcachedir -R
 
 #extras
 #wget -nv -c http://ftp.osuosl.org/pub/ubuntu/pool/main/libf/libffi/libffi6_3.2.1-4_amd64.deb -P $pkgcachedir
@@ -50,7 +52,7 @@ mkdir -p $pkgcachedir
 # appimage
 cd ..
 
-#wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
+wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
 chmod +x appimagetool.AppImage
 
 cat > "AppRun" << EOF
@@ -72,5 +74,7 @@ cp resource/* $WORKDIR
 ./appimagetool.AppImage --appimage-extract
 
 export ARCH=x86_64; squashfs-root/AppRun -v $WORKDIR -u 'gh-releases-zsync|ferion11|$P_NAME_Appimage|continuous|$P_NAME-v${P_VERSION}-*arch*.AppImage.zsync' $P_NAME-v${P_VERSION}-${ARCH}.AppImage
+
+rm -rf appimagetool.AppImage
 
 echo "All files at the end of script: $(ls)"
