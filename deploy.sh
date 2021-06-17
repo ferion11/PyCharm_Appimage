@@ -1,5 +1,5 @@
 #!/bin/bash
-P_URL="https://download-cf.jetbrains.com/python/pycharm-community-2020.3.5.tar.gz"
+P_URL="https://download-cdn.jetbrains.com/python/pycharm-community-2021.1.2.tar.gz"
 
 P_NAME="$(echo "PyCharm")"
 P_FILENAME="$(echo $P_URL | cut -d/ -f5)"
